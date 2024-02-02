@@ -1,6 +1,6 @@
 var states = ["night", "dawn", "sunrise", "early_morning", "day", "golden_hour", "sunset", "dusk"];
 var stateCount = [1, 1, 1];
-var imageDirectory = "default/", fileType = "png";
+var imageDirectory = "default/", fileType = "jpg";
 
 // Converted times for sunrise, sunset, noon events (eg. 1452 meaning 14hrs 52min)
 var fin_sunrise, fin_sunset, fin_noon;
@@ -121,15 +121,18 @@ function UTCToLocal(utc) {
     fin_sunset_min = setmin;
     fin_noon_min = noonmin;
 
-    console.log("Converted times")
+    console.log("Converted times");
     console.log(fin_sunrise);
     console.log(fin_sunset);
     console.log(fin_noon);
+    console.log("Converted minutes");
+    console.log(fin_sunrise_min);
+    console.log(fin_sunset_min);
+    console.log(fin_noon_min);
 }
 
 // Sets the time when certain backgrounds should change based on final times
 function setTimes() {
-
     // Dawn (1.5 hours before sunrise aka 130)
     if ((fin_sunrise_min - 30) < 0) {
         dawn = fin_sunrise - 170;
@@ -239,9 +242,9 @@ async function get(api, n = 10, wait = 1000) {
 // Changes the lat and lon based on the city given in Wallpaper Engine using nominatim from OSM
 async function updateCity() {
     console.log("Update city");
-    //currentcity = "London";
-    //currentstate = "England";
-    //currentcountry = "United Kingdom";
+    currentcity = "Billings";
+    currentstate = "Montana";
+    currentcountry = "United States";
     var q = "q=" + currentcity + ",+" + currentstate + ",+" + currentcountry;
     console.log(q);
     const data = await get("https://nominatim.openstreetmap.org/search?" + q + "&addressdetails=1&format=json");
