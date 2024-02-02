@@ -1,9 +1,10 @@
-var states = ["dawn", "sunrise", "early_morning", "day", "golden_hour", "sunset", "dusk", "night"];
+var states = ["night", "dawn", "sunrise", "early_morning", "day", "golden_hour", "sunset", "dusk"];
 var stateCount = [1, 1, 1];
 var imageDirectory = "default/", fileType = "png";
 
 // Converted times for sunrise, sunset, noon events (eg. 1452 meaning 14hrs 52min)
 var fin_sunrise, fin_sunset, fin_noon;
+var fin_sunrise_min, fin_sunset_min, fin_noon_min;
 // Denote the start times for the following backgrounds (eg. 300 meaning 3hrs 00min)
 var night, dawn, sunrise, early_morning, day, golden_hour, sunset, dusk;
 
@@ -115,6 +116,10 @@ function UTCToLocal(utc) {
     fin_sunrise = risehour + risemin;
     fin_sunset = sethour + setmin;
     fin_noon = noonhour + noonmin;
+    // Used for setting times
+    fin_sunrise_min = risemin;
+    fin_sunset_min = setmin;
+    fin_noon_min = noonmin;
 
     console.log("Converted times")
     console.log(fin_sunrise);
@@ -124,11 +129,36 @@ function UTCToLocal(utc) {
 
 // Sets the time when certain backgrounds should change based on final times
 function setTimes() {
-    pink = fin_sunrise - 100;
-    green = fin_sunrise + 100;
-    whiteblue = fin_noon;
-    orangeyellow = fin_sunset - 100;
-    purple = fin_sunset + 100;
+
+    // Dawn (1.5 hours before sunrise aka 130)
+    if ((fin_sunrise_min - 30) < 0) {
+        dawn = fin_sunrise - 170;
+    }
+    else {
+        dawn = fin_sunrise - 130;
+    }
+    // Sunrise (45 min before sunrise) (Runs for 1.5 hours total)
+    if ((fin_sunrise_min - 45) < 0) {
+        sunrise = fin_sunrise - 85;
+    }
+    else {
+        sunrise = fin_sunrise - 45;
+    }
+    // Early_morning (45 min after sunrise)
+    if ((fin_sunrise_min + 45) > 60) {
+        early_morning = fin_sunrise + 85;
+    }
+    else {
+        early_morning = fin_sunrise + 45;
+    }
+    // Day (At noon)
+    day = fin_noon;
+    // Golden_hour (1 hour before sunset aka 100)
+    golden_hour = fin_sunset - 100;
+    // Sunset (At sunset)
+    sunset = fin_sunset;
+    // Dusk (1 hour after sunset aka 100)
+    dusk = fin_sunset + 100;
 }
 
 // Changes the current time
