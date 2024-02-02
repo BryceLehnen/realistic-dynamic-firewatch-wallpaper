@@ -1,0 +1,46 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "Dynamic Firewatch wallpaper that changes based off of sunrise and sunset times",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"city" : 
+			{
+				"text" : "Enter your city",
+				"type" : "textinput",
+				"value" : "London"
+			},
+			"country" : 
+			{
+				"text" : "Enter your country",
+				"type" : "textinput",
+				"value" : "United Kingdom"
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
+			"state" : 
+			{
+				"text" : "Enter your state (Leave empty if not applicable)",
+				"type" : "textinput",
+				"value" : "England"
+			}
+		}
+	},
+	"preview" : "preview.gif",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Landscape" ],
+	"title" : "Realistic Dynamic Firewatch Wallpaper",
+	"type" : "web",
+	"version" : "1.0",
+	"visibility" : "public",
+	"workshopid" : "3042208232",
+	"workshopurl" : "steam://url/CommunityFilePage/3042208232"
+}
