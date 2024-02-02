@@ -1,11 +1,11 @@
-var states = ["darknight", "witching", "night", "pink", "green", "whiteblue", "orangeyellow", "purple", "blackwhite"];
+var states = ["dawn", "sunrise", "early_morning", "day", "golden_hour", "sunset", "dusk", "night"];
 var stateCount = [1, 1, 1];
 var imageDirectory = "default/", fileType = "png";
 
 // Converted times for sunrise, sunset, noon events (eg. 1452 meaning 14hrs 52min)
 var fin_sunrise, fin_sunset, fin_noon;
 // Denote the start times for the following backgrounds (eg. 300 meaning 3hrs 00min)
-var darknight = 0, witching = 300, night = 400, pink, green, whiteblue, orangeyellow, purple, blackwhite = 2300;
+var night, dawn, sunrise, early_morning, day, golden_hour, sunset, dusk;
 
 var time = 0, lastTime = 0, lastState = 0;
 var switchTime = 0;
@@ -55,15 +55,15 @@ function update(){
     changeTime();
     if (lastTime != time) {
         lastTime = time;
-        if (time >= darknight && time < witching) change(0);
-        if (time >= witching && time < night) change(1);
-        if (time >= night && time < pink) change(2);
-        if (time >= pink && time < green) change(3);
-        if (time >= green && time < whiteblue) change(4);
-        if (time >= whiteblue && time < orangeyellow) change(5);
-        if (time >= orangeyellow && time < purple) change(6);
-        if (time >= purple && time < blackwhite) change(7);
-        if (time >= blackwhite) change(8);
+        if (time >= night && time < dawn) change(0);
+        if (time >= dawn && time < sunrise) change(1);
+        if (time >= sunrise && time < early_morning) change(2);
+        if (time >= early_morning && time < day) change(3);
+        if (time >= day && time < golden_hour) change(4);
+        if (time >= golden_hour && time < sunset) change(5);
+        if (time >= sunset && time < dusk) change(6);
+        if (time >= dusk && time < night) change(7);
+        //if (time >= night) change(8);
     }
 }
 
