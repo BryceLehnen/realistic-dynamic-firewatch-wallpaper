@@ -64,7 +64,6 @@ function update(){
         if (time >= golden_hour && time < sunset) change(5);
         if (time >= sunset && time < dusk) change(6);
         if (time >= dusk && time < night) change(7);
-        //if (time >= night) change(8);
     }
 }
 
@@ -242,9 +241,9 @@ async function get(api, n = 10, wait = 1000) {
 // Changes the lat and lon based on the city given in Wallpaper Engine using nominatim from OSM
 async function updateCity() {
     console.log("Update city");
-    currentcity = "Billings";
-    currentstate = "Montana";
-    currentcountry = "United States";
+    //currentcity = "London";
+    //currentstate = "England";
+    //currentcountry = "United Kingdom";
     var q = "q=" + currentcity + ",+" + currentstate + ",+" + currentcountry;
     console.log(q);
     const data = await get("https://nominatim.openstreetmap.org/search?" + q + "&addressdetails=1&format=json");
