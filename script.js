@@ -8,7 +8,7 @@ var fin_sunrise_min, fin_sunset_min, fin_noon_min;
 // Denote the start times for the following backgrounds (eg. 300 meaning 3hrs 00min)
 var night, dawn, sunrise, early_morning, day, golden_hour, sunset, dusk;
 
-var time = 0, lastTime = 0, lastState = 0;
+var time = 0, lastTime = 0, lastState = -1;
 var switchTime = 0;
 
 // Cached values of lat, lon
@@ -56,7 +56,7 @@ function update(){
     changeTime();
     if (lastTime != time) {
         lastTime = time;
-        if (time >= night && time < dawn) change(0);
+        if (time >= night || time < dawn) change(0);
         if (time >= dawn && time < sunrise) change(1);
         if (time >= sunrise && time < early_morning) change(2);
         if (time >= early_morning && time < day) change(3);
@@ -133,21 +133,21 @@ function UTCToLocal(utc) {
 // Sets the time when certain backgrounds should change based on final times
 function setTimes() {
     // Dawn (1.5 hours before sunrise aka 130)
-    if ((fin_sunrise_min - 30) < 0) {
+    if ((fin_sunrise_min - 30) <= 0) {
         dawn = fin_sunrise - 170;
     }
     else {
         dawn = fin_sunrise - 130;
     }
     // Sunrise (45 min before sunrise) (Runs for 1.5 hours total)
-    if ((fin_sunrise_min - 45) < 0) {
+    if ((fin_sunrise_min - 45) <= 0) {
         sunrise = fin_sunrise - 85;
     }
     else {
         sunrise = fin_sunrise - 45;
     }
     // Early_morning (45 min after sunrise)
-    if ((fin_sunrise_min + 45) > 60) {
+    if ((fin_sunrise_min + 45) >= 60) {
         early_morning = fin_sunrise + 85;
     }
     else {
@@ -161,12 +161,20 @@ function setTimes() {
     sunset = fin_sunset;
     // Dusk (1 hour after sunset aka 100)
     dusk = fin_sunset + 100;
+    // Night (45 min after dusk)
+    if ((fin_sunset_min + 45) >= 60) {
+        night = fin_sunset + 185;
+    }
+    else {
+        night = fin_sunset + 145;
+    }
 }
 
 // Changes the current time
 function changeTime() {
 	var curTime = new Date();
 	time = (curTime.getHours() * 100) + curTime.getMinutes();
+    //console.log(time);
 }
 
 // Change the image according to the index provided with transitions
@@ -203,13 +211,14 @@ function transition(futimage, curimage) {
         futimage.style.opacity = 1;
         curimage.style.opacity = 1;
         // Rate of opacity change interval
-        var del = 0.01;
+        var del = 0.005;
         // Loop for fade
         var id = setInterval(changeOpacity, 20);
     
         // Slowly changes opacity of current image from 1 to 0
         function changeOpacity() {
             curimage.style.opacity = curimage.style.opacity - del;
+            console.log(curimage.style.opacity);
             if (curimage.style.opacity <= 0) {
                 clearInterval(id);
                 resolve();
